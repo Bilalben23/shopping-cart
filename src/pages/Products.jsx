@@ -21,11 +21,7 @@ export default function Products() {
                     ? <ProductsCardsSkeleton numberOfCards={20} />
                     : products.map(product => <ProductCard
                         key={product.id}
-                        id={product.id}
-                        image={product.image}
-                        title={product.title}
-                        price={product.price}
-                        rating={product?.rating?.rate}
+                        product={product}
                     />)
             }
         </section>

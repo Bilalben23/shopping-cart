@@ -1,18 +1,32 @@
-import React from 'react'
+import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useFetch } from '../utils/useFetch'
 import { FaArrowLeft, FaCartPlus, FaStar } from "react-icons/fa"
 import ProductCardSkeleton from '../skeletons/ProductCardSkeleton'
-
+import { useDispatch } from 'react-redux'
+import { addToCart, isProductInCart, removeFromCart } from '../features/cart/cartSlice'
 
 export default function Product() {
 
     const { id } = useParams()
     const { data: product, isLoading, error } = useFetch(`https://fakestoreapi.com/products/${id}`, [id])
+    const dispatch = useDispatch();
+    const isProductAddedToCart = dispatch(isProductInCart(id))
+
+
+    useEffect(() => {
+        setIsProductInCart(Boolean(cart.find(p => p.product.id === product?.id)));
+    }, [cart, product?.id]);
+
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
 
     if (error) {
         return <div className='mt-2'>
-            <h1 className='text-2xl font-semibold text-center text-red-500'>{error} Error occurred when trying to access data.</h1>
+            <h1 className='text-2xl font-semibold text-center text-red-500'>{error}</h1>
         </div>
     }
 
@@ -44,10 +58,15 @@ export default function Product() {
                                     <FaArrowLeft />
                                     <span>Go Back</span>
                                 </Link>
-                                <button type="button" className='btn btn-primary btn-outline'>
+                                <button
+                                    type="button"
+                                    className={`btn btn-outline ${isProductInCart ? 'btn-error' : 'btn-primary'}`}
+                                    onClick={() => isProductAddedToCart ? dispatch(removeFromCart(product?.id)) : dispatch(addToCart(product))}
+                                >
                                     <FaCartPlus />
-                                    <span>  Ajouter au panier</span>
+                                    <span> {isProductAddedToCart ? "Retirer" : "Ajouter"} au panier</span>
                                 </button>
+
                             </div>
                         </div>
                     </div>
