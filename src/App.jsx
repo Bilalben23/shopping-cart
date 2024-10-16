@@ -14,7 +14,7 @@ export default function App() {
 
     return (
         <Provider store={store}>
-            <BrowserRouter>
+            <BrowserRouter basename="shopping-cart">
                 <Routes>
                     <Route path="/products" element={<Layout />}>
                         <Route index element={<Products />} />
