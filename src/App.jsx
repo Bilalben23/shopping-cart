@@ -13,8 +13,8 @@ import NotFoundPage from "./pages/NotFoundPage"
 export default function App() {
 
     return (
-        <Provider store={store}>
-            <BrowserRouter>
+        <Provider store={store} >
+            <BrowserRouter basename="shopping-cart">
                 <Routes>
                     <Route path="/products" element={<Layout />}>
                         <Route index element={<Products />} />
