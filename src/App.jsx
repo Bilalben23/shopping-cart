@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { HashRouter, Route, Routes } from "react-router-dom"
 import Layout from "./components/Layout"
 import Products from "./pages/Products"
 import Product from "./pages/Product"
@@ -13,8 +13,8 @@ import NotFoundPage from "./pages/NotFoundPage"
 export default function App() {
 
     return (
-        <Provider store={store}>
-            <BrowserRouter>
+        <Provider store={store} >
+            <HashRouter>
                 <Routes>
                     <Route path="/products" element={<Layout />}>
                         <Route index element={<Products />} />
@@ -23,7 +23,7 @@ export default function App() {
                         <Route path="*" element={<NotFoundPage />} />
                     </Route>
                 </Routes>
-            </BrowserRouter>
+            </HashRouter>
             <ToastContainer />
         </Provider>
     )
