@@ -9,9 +9,13 @@ export default function Products() {
 
 
     if (error) {
-        return <div className='mt-4'>
-            <h1 className='text-3xl font-semibold text-center text-red-500'>{error}</h1>
-        </div>
+        return (
+            <div className='mt-4'>
+                <h1 className='text-3xl font-semibold text-center text-red-500'>
+                    Oops! Something went wrong: {error.message || 'Unable to fetch products.'}
+                </h1>
+            </div>
+        );
     }
 
     return (

@@ -3,20 +3,16 @@ import { useParams, Link } from 'react-router-dom'
 import { useFetch } from '../utils/useFetch'
 import { FaArrowLeft, FaCartPlus, FaStar } from "react-icons/fa"
 import ProductCardSkeleton from '../skeletons/ProductCardSkeleton'
-import { useDispatch } from 'react-redux'
-import { addToCart, isProductInCart, removeFromCart } from '../features/cart/cartSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToCart, removeFromCart } from '../features/cart/cartSlice'
 
 export default function Product() {
 
     const { id } = useParams()
     const { data: product, isLoading, error } = useFetch(`https://fakestoreapi.com/products/${id}`, [id])
     const dispatch = useDispatch();
-    const isProductAddedToCart = dispatch(isProductInCart(id))
-
-
-    useEffect(() => {
-        setIsProductInCart(Boolean(cart.find(p => p.product.id === product?.id)));
-    }, [cart, product?.id]);
+    const cartItems = useSelector(state => state.cart.cartItems)
+    const isProductAddedToCart = cartItems.some(item => item.product.id === Number(id));
 
 
     useEffect(() => {
@@ -35,7 +31,7 @@ export default function Product() {
             {
                 isLoading
                     ? <ProductCardSkeleton />
-                    : <div className='card card-bordered w-[90%] mx-auto md:w-[700px] bg-base-300'>
+                    : <div className='card card-bordered w-[90%] mx-auto md:w-[700px] bg-base-300 selection:bg-primary selection:text-primary-content'>
                         <figure className='aspect-[16/9]'>
                             <img src={product?.image} className='w-full' alt={product?.title} />
                         </figure>
@@ -43,7 +39,7 @@ export default function Product() {
                             <h1 className='capitalize card-title'>{product?.title}</h1>
                             <p className='my-2'>{product?.description}</p>
                             <div>
-                                <p className='float-right py-3.5 capitalize badge badge-primary badge-lg'>{product?.category}</p>
+                                <p className='float-right py-3.5 capitalize badge badge-primary badge-lg selection:bg-secondary'>{product?.category}</p>
                             </div>
                             <div className='flex items-center justify-between mt-3'>
                                 <div>
@@ -60,18 +56,18 @@ export default function Product() {
                                 </Link>
                                 <button
                                     type="button"
-                                    className={`btn btn-outline ${isProductInCart ? 'btn-error' : 'btn-primary'}`}
-                                    onClick={() => isProductAddedToCart ? dispatch(removeFromCart(product?.id)) : dispatch(addToCart(product))}
+                                    className={`btn btn-outline ${isProductAddedToCart ? 'btn-error' : 'btn-primary'}`}
+                                    onClick={() => dispatch(isProductAddedToCart ? removeFromCart(product?.id) : addToCart(product))}
                                 >
                                     <FaCartPlus />
-                                    <span> {isProductAddedToCart ? "Retirer" : "Ajouter"} au panier</span>
+                                    <span> {isProductAddedToCart ? "Remove From" : "Add To"}  Cart</span>
                                 </button>
 
                             </div>
                         </div>
                     </div>
             }
-        </section>
+        </section >
     )
 }
 

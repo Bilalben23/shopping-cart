@@ -5,7 +5,9 @@ import Product from "./pages/Product"
 import ShoppingCart from "./pages/ShoppingCart"
 import store from "./store"
 import { Provider } from "react-redux"
-
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+import NotFoundPage from "./pages/NotFoundPage"
 
 
 export default function App() {
@@ -18,9 +20,11 @@ export default function App() {
                         <Route index element={<Products />} />
                         <Route path=":id" element={<Product />} />
                         <Route path="shoppingCart" element={<ShoppingCart />} />
+                        <Route path="*" element={<NotFoundPage />} />
                     </Route>
                 </Routes>
             </BrowserRouter>
+            <ToastContainer />
         </Provider>
     )
 }

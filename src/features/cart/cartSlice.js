@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 
 
@@ -9,19 +10,32 @@ const cartSlice = createSlice({
     },
     reducers: {
         addToCart(state, action) {
-            console.log("add to cart")
-
+            console.log(...state.cartItems)
+            const isProductExistInCart = state.cartItems.find(item => item.product.id === action.payload.id)
+            if (!isProductExistInCart) {
+                state.cartItems.push({ product: action.payload, quantity: 1 })
+                toast.success("Product added to your cart!", {
+                    position: "top-center",
+                    autoClose: 1000,
+                    pauseOnHover: false,
+                });
+            }
         },
         removeFromCart(state, action) {
-            console.log("remove from cart")
-
+            state.cartItems = state.cartItems.filter(item => item.product.id !== action.payload);
+            toast.error("Product removed from your cart!", {
+                position: "top-center",
+                autoClose: 1000,
+                pauseOnHover: false,
+            });
         },
-        removeAllFromCart(state, actions) {
-            console.log("remove all from cart");
-
-        },
-        isProductInCart(state, action) {
-            console.log("check if the product is in the cart");
+        removeAllFromCart(state) {
+            state.cartItems = [];
+            toast.error("All products removed from your cart!", {
+                position: "top-center",
+                autoClose: 1000,
+                pauseOnHover: false,
+            });
 
         },
         incrementQuantityOfProduct(state, action) {

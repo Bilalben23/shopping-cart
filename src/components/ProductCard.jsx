@@ -1,13 +1,13 @@
 import { FaCartPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addToCart, isProductInCart, removeFromCart } from "../features/cart/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeFromCart } from "../features/cart/cartSlice";
 
 export default function ProductCard({ product }) {
-
     const dispatch = useDispatch()
+    const cartItems = useSelector(state => state.cart.cartItems);
 
-    const isProductAddedToCart = dispatch(isProductInCart(product?.id))
+    const isProductAddedToCart = cartItems.some(item => item.product.id === product?.id);
 
 
     return (
@@ -25,11 +25,11 @@ export default function ProductCard({ product }) {
                 <div className='mt-5 card-actions'>
                     <button
                         type="button"
-                        className={`shadow-lg btn btn-block btn-outline glass ${isProductInCart ? "btn-error" : "btn-primary"}`}
-                        onClick={() => isProductAddedToCart ? dispatch(removeFromCart(product?.id)) : dispatch(addToCart(product))}
+                        className={`shadow-lg btn btn-block btn-outline glass ${isProductAddedToCart ? "btn-error" : "btn-primary"}`}
+                        onClick={() => dispatch(isProductAddedToCart ? removeFromCart(product?.id) : addToCart(product))}
                     >
                         <FaCartPlus />
-                        <span className='text-sm'> {isProductAddedToCart ? "Retirer " : "Ajouter"} au panier</span>
+                        <span className='text-sm'> {isProductAddedToCart ? "Remove From " : "Add To"} Cart</span>
                     </button>
                 </div>
             </div>
