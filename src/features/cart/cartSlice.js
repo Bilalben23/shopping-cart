@@ -39,13 +39,24 @@ const cartSlice = createSlice({
 
         },
         incrementQuantityOfProduct(state, action) {
-            console.log("increment quantity of product");
 
+            const productId = action.payload;
+            for (let i = 0; i < state.cartItems.length; i++) {
+                if (state.cartItems[i].product.id === productId) {
+                    state.cartItems[i].quantity += 1;
+                    break;
+                }
+            }
         },
         decrementQuantityOfProduct(state, action) {
-            console.log("decrement quantity of product");
+            const productId = action.payload;
+            for (let i = 0; i < state.cartItems.length; i++) {
+                if (state.cartItems[i].product.id === productId && state.cartItems[i].quantity > 1) {
+                    state.cartItems[i].quantity -= 1;
+                    break;
+                }
+            }
         }
-
     }
 })
 
@@ -56,7 +67,8 @@ export const {
     removeAllFromCart,
     isProductInCart,
     incrementQuantityOfProduct,
-    decrementQuantityOfProduct
+    decrementQuantityOfProduct,
+
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

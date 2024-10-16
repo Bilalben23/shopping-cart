@@ -7,6 +7,7 @@ export default function ShoppingCartCard({ product, index }) {
     const dispatch = useDispatch();
 
 
+
     return (
         <tr key={product?.product?.id} className={`${index % 2 === 0 && "bg-base-200"}`} >
             <td>
@@ -25,10 +26,13 @@ export default function ShoppingCartCard({ product, index }) {
             </td>
             <td className="min-w-[80px]">
                 <div className='shadow-sm join join-vertical md:join-horizontal shadow-neutral'>
-                    <button type="button" className='shadow-lg btn btn-secondary btn-circle btn-xs md:btn-sm join-item'
+                    <button type="button" className='shadow-lg btn btn-secondary btn-xs md:btn-sm join-item'
                         onClick={() => dispatch(incrementQuantityOfProduct(product?.product?.id))}>+</button>
-                    <span className='p-2 shadow-lg join-item btn btn-xs md:btn-sm'>0</span>
-                    <button type="button" className='shadow-lg btn btn-circle btn-secondary btn-xs md:btn-sm join-item'
+                    <div className='shadow-lg join-item btn btn-xs md:btn-sm countdown'>
+                        <span style={{ "--value": product?.quantity }}></span>
+                    </div>
+
+                    <button type="button" className='shadow-lg btn btn-secondary btn-xs md:btn-sm join-item'
                         onClick={() => dispatch(decrementQuantityOfProduct(product?.product?.id))}>-</button>
                 </div>
             </td>

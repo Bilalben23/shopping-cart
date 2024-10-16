@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaShoppingCart } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function Header() {
     const cartItems = useSelector(state => state.cart.cartItems)
@@ -11,21 +11,21 @@ export default function Header() {
             <nav>
                 <ul className='menu menu-horizontal'>
                     <li>
-                        <NavLink to="#" >Home</NavLink>
+                        <Link to="#" className='btn-disabled' >Home</Link>
                     </li>
                     <li>
-                        <NavLink to="/products" className={({ isActive }) => (isActive ? "focus" : "blur")}  >Products</NavLink>
+                        <Link to="/products">Products</Link>
                     </li>
                 </ul>
             </nav>
             <div>
-                <NavLink to="shoppingCart" className='btn btn-outline btn-sm btn-primary indicator'>
+                <Link to="shoppingCart" className='btn btn-outline btn-sm btn-primary indicator'>
                     <div className='countdown indicator-item w-[27px] h-[27px] rounded-full bg-primary grid place-content-center text-primary-content text-xs shadow-lg'>
                         <span style={{ "--value": cartItems.length }}></span>
                     </div>
                     <FaShoppingCart />
                     Cart
-                </NavLink>
+                </Link>
             </div>
         </header>
     )
