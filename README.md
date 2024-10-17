@@ -31,6 +31,7 @@ Welcome to the **Amazing Shopping Cart** project! This application is designed t
 
 ## Demo
 
-Check out the live demo of the Amazing Shopping Cart application [here](insert-demo-url).
+Check out the live demo of the Amazing Shopping Cart application [here](https://bilalben23.github.io/shopping-cart/#/products).
 
-![Demo Screenshot](insert-screenshot-url)
+![image](https://github.com/user-attachments/assets/f9c8b60e-a07b-4422-81f5-7958e8bd285c)
+
